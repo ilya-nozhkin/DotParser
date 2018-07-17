@@ -44,6 +44,14 @@
     <ILRepack>$(NuGetPackageRoot)ilrepack\$(ILRepackVersion)\tools\ILRepack.exe</ILRepack>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  <PropertyGroup>
+    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+
+    <PackageVersion>1.0.7</PackageVersion>
+    <Title>DotParser</Title>
+    <Description>Graphviz dot parser</Description>
+    <Authors>auduchinok</Authors>
   </PropertyGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
@@ -66,7 +74,6 @@
   </Target>
 
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Compile Include="GraphData.fs" />
     <Compile Include="Grammar.yrd.fs" />
     <Compile Include="Lexer.fs" />
@@ -108,11 +115,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharpx.Collections" Version="1.8.45" />
-    <PackageReference Include="FSharpx.Collections.Experimental" Version="1.8.41" />
-    <PackageReference Include="FsLexYacc.Runtime" Version="7.0.6" />
-    <PackageReference Include="ILRepack" Version="$(ILRepackVersion)" />
-    <PackageReference Include="YC.FsYARD" Version="$(FsYardVersion)" />
+    <PackageReference Include="FSharpx.Collections" Version="1.8.45">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <PackageReference Include="FSharpx.Collections.Experimental" Version="1.8.41">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <PackageReference Include="FsLexYacc.Runtime" Version="7.0.6">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <PackageReference Include="ILRepack" Version="$(ILRepackVersion)">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <PackageReference Include="YC.FsYARD" Version="$(FsYardVersion)">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -123,15 +144,6 @@
   <Target Name="PrintReferences" DependsOnTargets="ResolveProjectReferences;ResolveAssemblyReferences">
 	  <Message Text="Assembly References:" Importance="high" />
 	  <Message Text="@(_ResolveAssemblyReferenceResolvedFiles)" />
-  </Target>
-
-  <Target Name="ReadPackageVersionFromOutputAssembly">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="PackAssembly" />
-    </GetAssemblyIdentity>
-    <PropertyGroup>
-      <PackageVersion>%(PackAssembly.Version)</PackageVersion>
-    </PropertyGroup>
   </Target>
 
   <Target Name="PostBuild" BeforeTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
