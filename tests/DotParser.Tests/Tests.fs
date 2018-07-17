@@ -4,6 +4,9 @@ open DotParser
 open GraphData
 open FsUnit
 open NUnit.Framework
+open System.Collections
+open System.Linq
+
 
 let isDirected (g : GraphData) = g.IsDirected
 let isStrict   (g : GraphData) = g.IsStrict

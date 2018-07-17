@@ -1,6 +1,18 @@
 @echo off
 cls
 
-dotnet build DotParser.sln /P:Configuration=Release
-dotnet test tests\DotParser.Tests\DotParser.Tests.fsproj /P:Configuration=Release
-dotnet pack src\DotParser\DotParser.fsproj /P:Configuration=Release
+.paket\paket.bootstrapper.exe
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
+.paket\paket.exe restore
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
+IF NOT EXIST build.fsx (
+  .paket\paket.exe update
+  packages\build\FAKE\tools\FAKE.exe init.fsx
+)
+packages\build\FAKE\tools\FAKE.exe build.fsx %*

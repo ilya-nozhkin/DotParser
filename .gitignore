@@ -1,8 +1,5 @@
 # Ignore generated files
-src/DotParser/out
-src/DotParser/Lexer.fs
-src/DotParser/Lexer_Abstract.fs
-src/DotParser/Grammar.yrd.fs
+src/DotParser/gen/
 res.dot
 
 ## Ignore Visual Studio temporary files, build results, and
